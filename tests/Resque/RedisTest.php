@@ -1,12 +1,20 @@
 <?php
 
+/*
+ * This file is part of the php-resque package.
+ *
+ * (c) Michael Haynes <mike@mjphaynes.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Resque\Tests;
 
 use PHPUnit\Framework\TestCase;
 
 class RedisTest extends TestCase
 {
-
     private $legacyParameters = array(
         'scheme'     => 'tcp',
         'host'       => 'redis_instance_01',
@@ -40,7 +48,6 @@ class RedisTest extends TestCase
 
     public function setUp()
     {
-
         $predisClassName = "\\Predis\\Client";
 
         $this->predisMock = $this->getMockBuilder($predisClassName)
@@ -56,7 +63,6 @@ class RedisTest extends TestCase
             ->setMethods(array('initializePredisClient'))
             ->getMock()
         ;
-
     }
 
     public function tearDown()
@@ -66,7 +72,6 @@ class RedisTest extends TestCase
 
     public function testConstructorShouldDoTheLegacyStuff()
     {
-
         $this->redisMock->expects($this->once())
             ->method('initializePredisClient')
             ->with(
@@ -114,5 +119,4 @@ class RedisTest extends TestCase
 
         $this->redisMock->__construct(array_merge($this->legacyParameters, array('predis' => $this->predisNativeParameters)));
     }
-
 }
