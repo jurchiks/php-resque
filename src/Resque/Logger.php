@@ -88,7 +88,7 @@ class Logger
      */
     public function __construct(array $handlers)
     {
-        $this->instance = new \Monolog\Logger('resque');
+        $this->instance = new Monolog\Logger('resque');
 
         foreach ($handlers as $handler) {
             $this->instance->pushHandler($handler);
@@ -108,10 +108,10 @@ class Logger
     /**
      * Send log message to output interface
      *
-     * @param string $message Message to output
-     * @param int    $context Some context around the log
-     * @param int    $logType The log type
-     * @reutrn mixed
+     * @param  string $message Message to output
+     * @param  int    $context Some context around the log
+     * @param  int    $logType The log type
+     * @return mixed
      */
     public function log($message, $context = null, $logType = null)
     {
