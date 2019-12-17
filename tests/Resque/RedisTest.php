@@ -12,6 +12,8 @@
 namespace Resque\Tests;
 
 use PHPUnit\Framework\TestCase;
+use Predis\Client;
+use Resque\Redis;
 
 class RedisTest extends TestCase
 {
@@ -46,26 +48,20 @@ class RedisTest extends TestCase
 
     private $redisMock = null;
 
-    public function setUp()
+    public function setUp(): void
     {
-        $predisClassName = "\\Predis\\Client";
-
-        $this->predisMock = $this->getMockBuilder($predisClassName)
+        $this->predisMock = $this->getMockBuilder(Client::class)
             ->disableOriginalConstructor()
-            ->setMethods(array('connect'))
-            ->getMock()
-        ;
+            ->onlyMethods(array('connect'))
+            ->getMock();
 
-        $className = "\\Resque\\Redis";
-
-        $this->redisMock = $this->getMockBuilder($className)
+        $this->redisMock = $this->getMockBuilder(Redis::class)
             ->disableOriginalConstructor()
-            ->setMethods(array('initializePredisClient'))
-            ->getMock()
-        ;
+            ->onlyMethods(array('initializePredisClient'))
+            ->getMock();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->predisMock = null;
     }
@@ -88,8 +84,7 @@ class RedisTest extends TestCase
                     ),
                 )
             )
-            ->willReturn($this->predisMock)
-        ;
+            ->willReturn($this->predisMock);
 
         $this->predisMock->expects($this->any())->method('connect');
 
@@ -98,13 +93,10 @@ class RedisTest extends TestCase
 
     public function testConstructorShouldAcceptPredisOverride()
     {
-        $className = "\\Resque\\Redis";
-
-        $this->redisMock = $this->getMockBuilder($className)
+        $this->redisMock = $this->getMockBuilder(Redis::class)
             ->disableOriginalConstructor()
-            ->setMethods(array('initializePredisClient'))
-            ->getMock()
-        ;
+            ->onlyMethods(array('initializePredisClient'))
+            ->getMock();
 
         $this->redisMock->expects($this->once())
             ->method('initializePredisClient')
@@ -112,8 +104,7 @@ class RedisTest extends TestCase
                 $this->predisNativeParameters['config'],
                 $this->predisNativeParameters['options']
             )
-            ->willReturn($this->predisMock)
-        ;
+            ->willReturn($this->predisMock);
 
         $this->predisMock->expects($this->any())->method('connect');
 
