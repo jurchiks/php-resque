@@ -64,17 +64,12 @@ class Restart extends Command
             if (posix_kill($worker->getPid(), SIGTERM)) {
                 $child = pcntl_fork();
 
-                // Failed
-                if ($child == -1) {
+                if ($child == -1) { // Failed
                     $this->log('Unable to fork, worker '.$worker.' has been stopped.', Resque\Logger::CRITICAL);
-
-                    // Parent
-                } elseif ($child > 0) {
+                } elseif ($child > 0) { // Parent
                     $this->log('Worker <pop>'.$worker.'</pop> restarted.');
                     continue;
-
-                    // Child
-                } else {
+                } else { // Child
                     $new_worker = new Resque\Worker($worker->getQueues(), $worker->getBlocking());
                     $new_worker->setInterval($worker->getInterval());
                     $new_worker->setTimeout($worker->getTimeout());

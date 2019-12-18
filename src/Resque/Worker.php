@@ -710,8 +710,8 @@ class Worker
     /**
      * Set a new handler method for a given signal
      *
-     * @param  int     Signal Identifier (ie. SIGTERM)
-     * @param  string  Signal handler method name
+     * @param int    $signal                  Signal Identifier (ie. SIGTERM)
+     * @param string $signalHandlerMethodName Signal handler method name
      */
     public function setSignalHandler($signal, $signalHandlerMethodName)
     {
@@ -1270,7 +1270,7 @@ class Worker
     /**
      * Creates process title string from current version and status of worker
      *
-     * @param string $status
+     * @param  string $status
      * @return string
      */
     protected function getProcessTitle($status)
